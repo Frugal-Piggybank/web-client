@@ -1,6 +1,6 @@
 import { Flex, Heading } from "@chakra-ui/react";
 
-export const Hero = ({ title }: { title: string }) => (
+const Hero = ({ title }: { title: string }) => (
   <Flex
     justifyContent="center"
     alignItems="center"
@@ -11,3 +11,5 @@ export const Hero = ({ title }: { title: string }) => (
     <Heading fontSize="6vw">{title}</Heading>
   </Flex>
 );
+
+export default Hero;

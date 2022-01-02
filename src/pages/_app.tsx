@@ -1,13 +1,19 @@
 import { ChakraProvider } from "@chakra-ui/react";
-
-import theme from "../../theme";
+import { ApolloProvider } from "@apollo/client";
 import { AppProps } from "next/app";
 
+import theme from "../../theme";
+import { useApollo } from "../lib/apollo-client";
+
 function MyApp({ Component, pageProps }: AppProps) {
+  const apolloClient = useApollo(pageProps);
+
   return (
-    <ChakraProvider resetCSS theme={theme}>
-      <Component {...pageProps} />
-    </ChakraProvider>
+    <ApolloProvider client={apolloClient}>
+      <ChakraProvider resetCSS theme={theme}>
+        <Component {...pageProps} />
+      </ChakraProvider>
+    </ApolloProvider>
   );
 }
 

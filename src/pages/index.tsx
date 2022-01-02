@@ -8,11 +8,11 @@ import {
 } from "@chakra-ui/react";
 import { AtSignIcon, CheckCircleIcon, LinkIcon } from "@chakra-ui/icons";
 
-import { Hero } from "../components/hero";
-import { Container } from "../components/container";
-import { Main } from "../components/main";
-import { DarkModeSwitch } from "../components/dark-mode-switch";
-import { Footer } from "../components/footer";
+import Hero from "../components/hero";
+import Container from "../components/container";
+import Main from "../components/main";
+import DarkModeSwitch from "../components/dark-mode-switch";
+import Footer from "../components/footer";
 
 const Index = () => (
   <Container height="100vh">
