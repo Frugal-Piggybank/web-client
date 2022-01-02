@@ -1,6 +1,11 @@
+import { FC } from "react";
 import { Flex, Heading } from "@chakra-ui/react";
 
-const Hero = ({ title }: { title: string }) => (
+interface HeroProps {
+  title: string;
+}
+
+const Hero: FC<HeroProps> = ({ title }) => (
   <Flex
     justifyContent="center"
     alignItems="center"
