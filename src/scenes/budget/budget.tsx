@@ -5,6 +5,8 @@ import { useQuery } from "@apollo/client";
 import { GET_LINE_ITEMS } from "./graphql/queries";
 import Loading from "@shared/components/loading";
 import Error from "@shared/components/error";
+import BudgetTableHeader from "./components/budget-table-header";
+import BudgetTableBody from "./components/budget-table-body";
 
 const Budget: FC = () => {
   const { error, loading, data } = useQuery(GET_LINE_ITEMS);
@@ -15,24 +17,8 @@ const Budget: FC = () => {
   const { lineItems } = data;
   return (
     <Table variant="simple">
-      <Thead>
-        <Tr>
-          <Th>Date</Th>
-          <Th>Title</Th>
-          <Th>Description</Th>
-          <Th isNumeric>Amount</Th>
-        </Tr>
-      </Thead>
-      <Tbody>
-        {lineItems.map((lineItem: any) => (
-          <Tr>
-            <Td>{lineItem.date}</Td>
-            <Td>{lineItem.title}</Td>
-            <Td>{lineItem.description}</Td>
-            <Td>{lineItem.amount}</Td>
-          </Tr>
-        ))}
-      </Tbody>
+      <BudgetTableHeader />
+      <BudgetTableBody lineItems={lineItems} />
     </Table>
   );
 };

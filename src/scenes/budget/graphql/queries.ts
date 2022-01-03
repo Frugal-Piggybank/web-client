@@ -7,6 +7,7 @@ export const GET_LINE_ITEMS = gql`
       title
       description
       date
+      amount
     }
   }
 `;
