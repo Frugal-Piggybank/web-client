@@ -6,3 +6,12 @@ export type LineItem = {
   amount: number;
   date: Date;
 };
+
+export const NewLineItem: LineItem = {
+  title: "",
+  description: "",
+  // isSavings: false,
+  amount: 0,
+  date: new Date(),
+  // category: null,
+};

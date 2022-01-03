@@ -1,5 +1,6 @@
 import React, { FC } from "react";
-import { Table, Tbody, Td, Text, Th, Thead, Tr } from "@chakra-ui/react";
+import NextLink from "next/link";
+import { Link, Table, Tbody, Td, Text, Th, Thead, Tr } from "@chakra-ui/react";
 import { useQuery } from "@apollo/client";
 
 import { GET_LINE_ITEMS } from "./graphql/queries";
@@ -24,7 +25,11 @@ const Budget: FC = () => {
         <BudgetTableHeader />
         <BudgetTableBody lineItems={lineItems} />
       </Table>
-      <AddButton />
+      <NextLink href="/budget/edit" passHref>
+        <Link>
+          <AddButton />
+        </Link>
+      </NextLink>
     </>
   );
 };
