@@ -3,12 +3,14 @@ import { Table, Tbody, Td, Text, Th, Thead, Tr } from "@chakra-ui/react";
 import { useQuery } from "@apollo/client";
 
 import { GET_LINE_ITEMS } from "./graphql/queries";
+import Loading from "@shared/components/loading";
+import Error from "@shared/components/error";
 
 const Budget: FC = () => {
   const { error, loading, data } = useQuery(GET_LINE_ITEMS);
 
-  if (loading) return <Text>Loading...</Text>;
-  if (error) return <Text>Error! {error.message}</Text>;
+  if (loading) return <Loading />;
+  if (error) return <Error error={error} />;
 
   const { lineItems } = data;
   return (

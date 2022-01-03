@@ -1,8 +1,8 @@
 import React from "react";
 import { NextPage } from "next";
 
-import Layout from "../shared/layout";
-import Budget from "../scenes/budget";
+import Layout from "@shared/layout";
+import Budget from "@scenes/budget";
 
 const BudgetPage: NextPage = () => {
   return (

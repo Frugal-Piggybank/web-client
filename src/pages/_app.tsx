@@ -3,7 +3,7 @@ import { ApolloProvider } from "@apollo/client";
 import { AppProps } from "next/app";
 
 import theme from "../../theme";
-import { useApollo } from "../shared/lib/apollo-client";
+import { useApollo } from "@shared/lib/apollo-client";
 
 function MyApp({ Component, pageProps }: AppProps) {
   const apolloClient = useApollo(pageProps);

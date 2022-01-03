@@ -1,6 +1,6 @@
 import { NextPage } from "next";
 import { Text } from "@chakra-ui/react";
-import Layout from "../shared/layout";
+import Layout from "@shared/layout";
 
 const HomePage: NextPage = () => (
   <Layout>
