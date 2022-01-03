@@ -12,8 +12,7 @@ const BudgetTableBody: FC<BudgetTableBodyProps> = ({ lineItems }) => {
     <Tbody>
       {lineItems.map((lineItem: any) => (
         <Tr>
-          {/* <Td>{formatDateTime(lineItem.date)}</Td> */}
-          <Td>{lineItem.date}</Td>
+          <Td>{formatDateTime(lineItem.date)}</Td>
           <Td>{lineItem.title}</Td>
           <Td>{lineItem.description}</Td>
           <Td>{lineItem.amount}</Td>
