@@ -4,6 +4,21 @@ interface DateProps {
   year: number;
 }
 
+const monthNames: Array<string> = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+];
+
 const getDateProps = (date: Date): DateProps => {
   const year = date.getFullYear();
   const month = (1 + date.getMonth()).toString().padStart(2, "0");
@@ -21,4 +36,4 @@ const formatDateTime = (date: Date): string => {
   return `${dateProps.month}/${dateProps.day}/${dateProps.year}`;
 };
 
-export { formatDateTime };
+export { formatDateTime, monthNames };

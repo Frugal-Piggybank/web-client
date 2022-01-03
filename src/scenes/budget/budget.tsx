@@ -7,6 +7,8 @@ import Loading from "@shared/components/loading";
 import Error from "@shared/components/error";
 import BudgetTableHeader from "./components/budget-table-header";
 import BudgetTableBody from "./components/budget-table-body";
+import AddButton from "@shared/components/add-button";
+import BudgetHeader from "./components/budget-header";
 
 const Budget: FC = () => {
   const { error, loading, data } = useQuery(GET_LINE_ITEMS);
@@ -16,10 +18,14 @@ const Budget: FC = () => {
 
   const { lineItems } = data;
   return (
-    <Table variant="simple">
-      <BudgetTableHeader />
-      <BudgetTableBody lineItems={lineItems} />
-    </Table>
+    <>
+      <BudgetHeader />
+      <Table variant="simple">
+        <BudgetTableHeader />
+        <BudgetTableBody lineItems={lineItems} />
+      </Table>
+      <AddButton />
+    </>
   );
 };
 

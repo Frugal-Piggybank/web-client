@@ -6,8 +6,7 @@ const Main: FC<StackProps> = (props) => (
     spacing="1.5rem"
     width="100%"
     maxWidth="48rem"
-    mt="-45vh"
-    pt="8rem"
+    py="3rem"
     px="1rem"
     {...props}
   />
