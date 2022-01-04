@@ -20,9 +20,9 @@ const monthNames: Array<string> = [
 ];
 
 const getDateProps = (date: Date): DateProps => {
-  const year = date.getFullYear();
-  const month = (1 + date.getMonth()).toString().padStart(2, "0");
-  const day = date.getDate().toString().padStart(2, "0");
+  const year = date.getUTCFullYear();
+  const month = (1 + date.getUTCMonth()).toString().padStart(2, "0");
+  const day = date.getUTCDate().toString().padStart(2, "0");
 
   return {
     month,

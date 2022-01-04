@@ -5,7 +5,7 @@ export const GET_LINE_ITEMS = gql`
     lineItems {
       _id
       title
-      description
+      notes
       date
       amount
     }
@@ -17,7 +17,7 @@ export const GET_LINE_ITEMS_BY_DATE = gql`
     lineItemsByDate(start: $start, end: $end) {
       _id
       title
-      description
+      notes
       date
       amount
     }

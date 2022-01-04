@@ -14,7 +14,7 @@ const Budget: FC = () => {
   const { error, loading, data } = useQuery(GET_LINE_ITEMS_BY_DATE, {
     variables: {
       start: "2022-01-01T00:00:00.000Z",
-      end: "2022-01-16T00:00:00.000Z",
+      end: "2022-01-17T00:00:00.000Z",
     },
   });
 

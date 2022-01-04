@@ -1,15 +1,17 @@
 import React, { FC, useState } from "react";
 import { useRouter } from "next/router";
+import { useMutation } from "@apollo/client";
 import {
   Button,
   FormLabel,
+  Icon,
   Input,
   InputGroup,
   InputLeftElement,
   Textarea,
   useToast,
 } from "@chakra-ui/react";
-import { useMutation } from "@apollo/client";
+import { FiCalendar, FiDollarSign } from "react-icons/fi";
 
 import LineItemInput from "./line-item-input";
 import { LineItem, NewLineItem } from "@scenes/budget/types/LineItem";
@@ -37,7 +39,6 @@ const UpsertLineItemForm: FC = () => {
 
       toast({
         title: "Budget saved.",
-        // description: "We've created your account for you.",
         status: "success",
         duration: 5000,
         isClosable: true,
@@ -64,6 +65,8 @@ const UpsertLineItemForm: FC = () => {
       ? (newVal = value == "true")
       : (newVal = value);
 
+    console.log(newVal);
+
     setLineItem((prevLineItem: LineItem) => ({
       ...prevLineItem,
       [name]: newVal,
@@ -78,20 +81,26 @@ const UpsertLineItemForm: FC = () => {
         labelText="Title"
         onChange={(e) => handleInputChange(e)}
       />
-      <LineItemInput
-        inputId="date"
-        inputType="date"
-        labelText="Date"
-        onChange={(e) => handleInputChange(e)}
-      />
+
+      <FormLabel htmlFor="date">Date</FormLabel>
+      <InputGroup>
+        <InputLeftElement
+          pointerEvents="none"
+          children={<Icon as={FiCalendar} color="gray.300" />}
+        />
+        <Input
+          name="date"
+          type="date"
+          onChange={(e) => handleInputChange(e)}
+          pattern="\d{4}-\d{2}-\d{2}"
+        />
+      </InputGroup>
 
       <FormLabel>Amount</FormLabel>
       <InputGroup>
         <InputLeftElement
           pointerEvents="none"
-          color="gray.300"
-          fontSize="1.2em"
-          children="$"
+          children={<Icon as={FiDollarSign} color="gray.300" />}
         />
         <Input
           name="amount"
@@ -103,7 +112,7 @@ const UpsertLineItemForm: FC = () => {
 
       <FormLabel>Notes</FormLabel>
       <Textarea
-        name="description"
+        name="notes"
         placeholder="Add any additional notes here"
         onChange={(e) => handleInputChange(e)}
       />

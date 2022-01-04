@@ -1,7 +1,7 @@
 export type LineItem = {
   _id?: string;
   title: string;
-  description: string;
+  notes: string;
   // isSavings: boolean
   // category?: Category
   amount: number;
@@ -11,7 +11,7 @@ export type LineItem = {
 export const NewLineItem: LineItem = {
   _id: undefined,
   title: "",
-  description: "",
+  notes: "",
   // isSavings: false,
   amount: 0,
   date: new Date(),
