@@ -11,3 +11,15 @@ export const GET_LINE_ITEMS = gql`
     }
   }
 `;
+
+export const GET_LINE_ITEMS_BY_DATE = gql`
+  query GetLineItemsByDate($start: Date!, $end: Date) {
+    lineItemsByDate(start: $start, end: $end) {
+      _id
+      title
+      description
+      date
+      amount
+    }
+  }
+`;

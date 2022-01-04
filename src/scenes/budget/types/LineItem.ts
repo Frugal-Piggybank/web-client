@@ -1,4 +1,5 @@
 export type LineItem = {
+  _id?: string;
   title: string;
   description: string;
   // isSavings: boolean
@@ -8,6 +9,7 @@ export type LineItem = {
 };
 
 export const NewLineItem: LineItem = {
+  _id: undefined,
   title: "",
   description: "",
   // isSavings: false,

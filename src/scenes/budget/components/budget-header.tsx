@@ -1,6 +1,5 @@
 import React, { FC, useState } from "react";
-import { Button, Center, Select, Stack } from "@chakra-ui/react";
-import { monthNames } from "@shared/lib/datetime-helpers";
+import { Button, Center, Stack } from "@chakra-ui/react";
 
 const BudgetHeader: FC = () => {
   const [showExpenses, setShowExpenses] = useState<boolean>(true);
