@@ -25,7 +25,6 @@ const BudgetContainerItem: FC<BudgetContainerItemProps> = ({
 }) => {
   return (
     <Box
-      key={lineItem._id}
       width="100%"
       p={5}
       shadow="md"

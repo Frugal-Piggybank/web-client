@@ -3,6 +3,7 @@ import { VStack, useDisclosure } from "@chakra-ui/react";
 import { LineItem } from "../types/LineItem";
 import ConfirmationModal from "@shared/components/confirmation-modal/confirmation-modal";
 import BudgetContainerItem from "./budget-container-item";
+import useSort from "@shared/hooks/use-sort";
 
 interface BudgetContainerProps {
   lineItems: LineItem[];
@@ -11,6 +12,7 @@ interface BudgetContainerProps {
 const BudgetContainer: FC<BudgetContainerProps> = ({ lineItems }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [itemToDelete, setItemToDelete] = useState<string>();
+  const { sortedData, ...sortControls } = useSort(lineItems, "date");
 
   const confirmDeletion = (id?: string) => {
     alert(`Deleting item: ${itemToDelete}`);
@@ -25,8 +27,9 @@ const BudgetContainer: FC<BudgetContainerProps> = ({ lineItems }) => {
   return (
     <>
       <VStack>
-        {lineItems.map((lineItem: LineItem) => (
+        {sortedData.map((lineItem: LineItem) => (
           <BudgetContainerItem
+            key={lineItem._id}
             lineItem={lineItem}
             onDelete={() => {
               setItemToDelete(lineItem._id);
