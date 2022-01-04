@@ -1,5 +1,6 @@
 import React, { FC } from "react";
 import {
+  Heading,
   IconButton,
   Popover,
   PopoverArrow,
@@ -24,7 +25,9 @@ const LineItemNotesPopover: FC<LineItemNotesPopoverProps> = ({ notes }) => {
       <PopoverContent>
         <PopoverArrow />
         <PopoverCloseButton />
-        <PopoverHeader>Notes</PopoverHeader>
+        <PopoverHeader>
+          <Heading size="sm">Notes</Heading>
+        </PopoverHeader>
         <PopoverBody>{notes}</PopoverBody>
       </PopoverContent>
     </Popover>

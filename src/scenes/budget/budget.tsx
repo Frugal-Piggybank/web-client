@@ -11,11 +11,12 @@ import BudgetHeader from "./components/budget-header";
 import BudgetContainer from "./components/budget-container";
 
 const Budget: FC = () => {
-  const { error, loading, data } = useQuery(GET_LINE_ITEMS_BY_DATE, {
+  const { error, loading, data, refetch } = useQuery(GET_LINE_ITEMS_BY_DATE, {
     variables: {
       start: "2022-01-01T00:00:00.000Z",
       end: "2022-01-17T00:00:00.000Z",
     },
+    fetchPolicy: "cache-and-network",
   });
 
   if (loading) return <Loading />;
@@ -27,7 +28,7 @@ const Budget: FC = () => {
     <>
       <BudgetHeader />
       <Heading size="lg">January 2021</Heading>
-      <BudgetContainer lineItems={lineItems} />
+      <BudgetContainer lineItems={lineItems} refetchLineItems={refetch} />
       <NextLink href="/budget/edit" passHref>
         <Link>
           <AddButton />

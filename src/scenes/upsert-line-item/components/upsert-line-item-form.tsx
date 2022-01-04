@@ -38,7 +38,7 @@ const UpsertLineItemForm: FC = () => {
       setIsSubmitting(false);
 
       toast({
-        title: "Budget saved.",
+        title: "Line item created.",
         status: "success",
         duration: 5000,
         isClosable: true,
@@ -47,9 +47,12 @@ const UpsertLineItemForm: FC = () => {
     } catch (err) {
       setIsSubmitting(false);
 
-      console.error(
-        "Could not save line item. Please review the form below or try again later."
-      );
+      toast({
+        title: "Could not create new line item.",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+      });
     }
   };
 

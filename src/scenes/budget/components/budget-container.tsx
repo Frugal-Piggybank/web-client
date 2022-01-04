@@ -1,21 +1,51 @@
 import React, { FC, useState } from "react";
-import { VStack, useDisclosure } from "@chakra-ui/react";
+import { VStack, useDisclosure, useToast } from "@chakra-ui/react";
+import { ApolloQueryResult, useMutation } from "@apollo/client";
+
 import { LineItem } from "../types/LineItem";
-import ConfirmationModal from "@shared/components/confirmation-modal/confirmation-modal";
+import DeleteAlertDialog from "@shared/components/alert-dialog/delete-alert-dialog";
 import BudgetContainerItem from "./budget-container-item";
 import useSort from "@shared/hooks/use-sort";
+import { DELETE_LINE_ITEM } from "../graphql/mutations";
 
 interface BudgetContainerProps {
   lineItems: LineItem[];
+  refetchLineItems: () => Promise<ApolloQueryResult<any>>;
 }
 
-const BudgetContainer: FC<BudgetContainerProps> = ({ lineItems }) => {
+const BudgetContainer: FC<BudgetContainerProps> = ({
+  lineItems,
+  refetchLineItems,
+}) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [itemToDelete, setItemToDelete] = useState<string>();
+  const [itemToDelete, setItemToDelete] = useState<LineItem>();
+  const [isDeleting, setIsDeleting] = useState<boolean>(false);
   const { sortedData, ...sortControls } = useSort(lineItems, "date");
+  const toast = useToast();
+  const [deleteLineItem] = useMutation(DELETE_LINE_ITEM);
 
-  const confirmDeletion = (id?: string) => {
-    alert(`Deleting item: ${itemToDelete}`);
+  const confirmDeletion = async () => {
+    try {
+      setIsDeleting(true);
+      await deleteLineItem({ variables: { id: itemToDelete?._id } });
+      toast({
+        title: "Budget deleted.",
+        status: "success",
+        duration: 5000,
+        isClosable: true,
+      });
+
+      refetchLineItems();
+    } catch (error) {
+      toast({
+        title: "Could not delete budget.",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+      });
+    }
+
+    setIsDeleting(false);
     onClose();
   };
 
@@ -32,19 +62,21 @@ const BudgetContainer: FC<BudgetContainerProps> = ({ lineItems }) => {
             key={lineItem._id}
             lineItem={lineItem}
             onDelete={() => {
-              setItemToDelete(lineItem._id);
+              setItemToDelete(lineItem);
               onOpen();
             }}
           />
         ))}
       </VStack>
-      <ConfirmationModal
+      <DeleteAlertDialog
+        title={itemToDelete?.title ?? ""}
         isOpen={isOpen}
         onClose={cancelDeletion}
-        onConfirm={confirmDeletion}
+        onDelete={confirmDeletion}
+        isDeleting={isDeleting}
       >
         Please confirm below if you'd like to delete this item.
-      </ConfirmationModal>
+      </DeleteAlertDialog>
     </>
   );
 };
