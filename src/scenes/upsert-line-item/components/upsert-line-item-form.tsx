@@ -40,11 +40,7 @@ const UpsertLineItemForm: FC<UpsertLineItemFormProps> = ({ id }) => {
 
   const getFormattedDateForInput = (date: Date) => {
     const asString = date.toString();
-    console.log(`Date as a string: `, date);
-
     const formatted = asString.substring(0, asString.indexOf("T"));
-
-    console.log(`Formatted Value `, formatted);
 
     return formatted;
   };
@@ -64,8 +60,6 @@ const UpsertLineItemForm: FC<UpsertLineItemFormProps> = ({ id }) => {
     setIsSubmitting(true);
 
     try {
-      console.log(`Submitting line item: `, lineItem);
-
       await upsertLineItem({
         variables: {
           lineItem,
@@ -74,7 +68,7 @@ const UpsertLineItemForm: FC<UpsertLineItemFormProps> = ({ id }) => {
       setIsSubmitting(false);
 
       toast({
-        title: "Line item created.",
+        title: lineItem._id ? "Line item updated." : "Line item created.",
         status: "success",
         duration: 5000,
         isClosable: true,
@@ -84,7 +78,7 @@ const UpsertLineItemForm: FC<UpsertLineItemFormProps> = ({ id }) => {
       setIsSubmitting(false);
 
       toast({
-        title: "Could not create new line item.",
+        title: "Could not save line item.",
         status: "error",
         duration: 5000,
         isClosable: true,

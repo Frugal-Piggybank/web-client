@@ -36,4 +36,15 @@ const formatDateTime = (date: Date): string => {
   return `${dateProps.month}/${dateProps.day}/${dateProps.year}`;
 };
 
-export { formatDateTime, monthNames };
+const getMonthStartAndEndDay = (month?: number, year?: number) => {
+  let activeMonth = month ?? new Date().getUTCMonth();
+  let activeYear = year ?? new Date().getUTCFullYear();
+
+  // console.log(`Getting start and end day for ${month}`);
+  let lastDay = new Date(Date.UTC(activeYear, activeMonth + 1, 0));
+  let firstDay = new Date(Date.UTC(activeYear, activeMonth, 1));
+
+  return { start: firstDay.toISOString(), end: lastDay.toISOString() };
+};
+
+export { formatDateTime, monthNames, getMonthStartAndEndDay };
