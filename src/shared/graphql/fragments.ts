@@ -9,3 +9,12 @@ export const BASE_LINE_ITEM = gql`
     amount
   }
 `;
+
+export const BASE_CATEGORY = gql`
+  fragment BaseCategory on Category {
+    _id
+    name
+    icon
+    isActive
+  }
+`;

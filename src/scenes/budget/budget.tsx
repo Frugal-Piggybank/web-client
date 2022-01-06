@@ -1,15 +1,15 @@
 import React, { FC, useState } from "react";
 import NextLink from "next/link";
-import { Button, Heading, Link, Table, Text } from "@chakra-ui/react";
+import { Heading, IconButton, Link } from "@chakra-ui/react";
 import { useQuery } from "@apollo/client";
 
 import { GET_LINE_ITEMS_BY_DATE } from "./graphql/queries";
 import Loading from "@shared/components/loading";
 import Error from "@shared/components/error";
-import AddButton from "@shared/components/add-button";
 import BudgetHeader from "./components/budget-header";
 import BudgetContainer from "./components/budget-container";
 import { getMonthStartAndEndDay } from "@shared/lib/datetime-helpers";
+import { FiPlus } from "react-icons/fi";
 
 const Budget: FC = () => {
   const [activeMonth, setActiveMonth] = useState<number>(
@@ -49,7 +49,11 @@ const Budget: FC = () => {
       <BudgetContainer lineItems={lineItems} refetchLineItems={refetch} />
       <NextLink href="/budget/edit" passHref>
         <Link>
-          <AddButton />
+          <IconButton
+            aria-label="Add Line Item"
+            icon={<FiPlus />}
+            colorScheme="teal"
+          />
         </Link>
       </NextLink>
     </>

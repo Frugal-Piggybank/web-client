@@ -17,6 +17,7 @@ import { LineItem, NewLineItem } from "@scenes/budget/types/LineItem";
 import { UPSERT_LINE_ITEM } from "../graphql/mutations";
 import { GET_LINE_ITEM } from "../graphql/queries";
 import { formatDateTime } from "@shared/lib/datetime-helpers";
+import CategorySelect from "./category-select";
 
 interface UpsertLineItemFormProps {
   id: string;
@@ -51,7 +52,7 @@ const UpsertLineItemForm: FC<UpsertLineItemFormProps> = ({ id }) => {
       setLineItem({
         ...data.lineItem,
         date: getFormattedDateForInput(data.lineItem.date),
-        // categor: data.lineItem.category?._id
+        // category: data.lineItem.category?._id,
       });
   }, [loading]);
 
@@ -98,8 +99,6 @@ const UpsertLineItemForm: FC<UpsertLineItemFormProps> = ({ id }) => {
       ? (newVal = value == "true")
       : (newVal = value);
 
-    console.log(`New Value: `, newVal);
-
     setLineItem((prevLineItem: LineItem) => ({
       ...prevLineItem,
       [name]: newVal,
@@ -138,6 +137,8 @@ const UpsertLineItemForm: FC<UpsertLineItemFormProps> = ({ id }) => {
           pattern="\d{4}-\d{2}-\d{2}"
         />
       </InputGroup>
+
+      <CategorySelect currentCategory={lineItem.category} />
 
       <FormLabel>Amount</FormLabel>
       <InputGroup>
