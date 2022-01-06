@@ -3,10 +3,10 @@ import { NextPage } from "next";
 import Layout from "@shared/layout";
 import UpsertLineItem from "@scenes/upsert-line-item";
 
-const EditBudgetPage: NextPage = () => {
+const EditBudgetPage: NextPage<{ id: string }> = ({ id }) => {
   return (
     <Layout pageTitle="Edit Budget">
-      <UpsertLineItem />
+      <UpsertLineItem id={id} />
     </Layout>
   );
 };

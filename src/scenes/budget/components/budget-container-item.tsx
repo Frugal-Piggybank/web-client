@@ -1,4 +1,5 @@
 import React, { FC } from "react";
+import { useRouter } from "next/router";
 import {
   Box,
   Flex,
@@ -16,13 +17,15 @@ import LineItemNotesPopover from "./line-item-notes-popover";
 
 interface BudgetContainerItemProps {
   lineItem: LineItem;
-  onDelete: () => void;
+  onDelete: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
 }
 
 const BudgetContainerItem: FC<BudgetContainerItemProps> = ({
   lineItem,
   onDelete,
 }) => {
+  const router = useRouter();
+
   return (
     <Box
       width="100%"
@@ -31,6 +34,7 @@ const BudgetContainerItem: FC<BudgetContainerItemProps> = ({
       borderWidth="1px"
       borderRadius="md"
       cursor="pointer"
+      onClick={() => router.push(`/budget/edit/${lineItem._id}`)}
     >
       <Flex justifyContent="space-between">
         <HStack spacing="10">

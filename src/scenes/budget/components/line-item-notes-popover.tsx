@@ -20,7 +20,12 @@ const LineItemNotesPopover: FC<LineItemNotesPopoverProps> = ({ notes }) => {
   return (
     <Popover>
       <PopoverTrigger>
-        <IconButton aria-label="Notes" icon={<FiInfo />} color="blue.300" />
+        <IconButton
+          onClick={(e) => e.stopPropagation()}
+          aria-label="Notes"
+          icon={<FiInfo />}
+          color="blue.300"
+        />
       </PopoverTrigger>
       <PopoverContent>
         <PopoverArrow />

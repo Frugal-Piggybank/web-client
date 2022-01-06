@@ -61,7 +61,8 @@ const BudgetContainer: FC<BudgetContainerProps> = ({
           <BudgetContainerItem
             key={lineItem._id}
             lineItem={lineItem}
-            onDelete={() => {
+            onDelete={(e) => {
+              e.stopPropagation();
               setItemToDelete(lineItem);
               onOpen();
             }}
@@ -74,9 +75,7 @@ const BudgetContainer: FC<BudgetContainerProps> = ({
         onClose={cancelDeletion}
         onDelete={confirmDeletion}
         isDeleting={isDeleting}
-      >
-        Please confirm below if you'd like to delete this item.
-      </DeleteAlertDialog>
+      />
     </>
   );
 };

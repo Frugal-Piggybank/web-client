@@ -1,6 +1,6 @@
-import React, { FC, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import { useMutation } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
 import {
   Button,
   FormLabel,
@@ -11,25 +11,61 @@ import {
   Textarea,
   useToast,
 } from "@chakra-ui/react";
-import { FiCalendar, FiDollarSign } from "react-icons/fi";
+import { FiCalendar, FiDollarSign, FiType } from "react-icons/fi";
 
-import LineItemInput from "./line-item-input";
 import { LineItem, NewLineItem } from "@scenes/budget/types/LineItem";
 import { UPSERT_LINE_ITEM } from "../graphql/mutations";
+import { GET_LINE_ITEM } from "../graphql/queries";
+import { formatDateTime } from "@shared/lib/datetime-helpers";
 
-const UpsertLineItemForm: FC = () => {
+interface UpsertLineItemFormProps {
+  id: string;
+}
+
+const UpsertLineItemForm: FC<UpsertLineItemFormProps> = ({ id }) => {
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [lineItem, setLineItem] = useState<LineItem>(NewLineItem);
+
+  const { loading, data } = useQuery(GET_LINE_ITEM, {
+    variables: {
+      id,
+    },
+    skip: !id,
+    fetchPolicy: "network-only",
+  });
   const [upsertLineItem] = useMutation(UPSERT_LINE_ITEM);
 
   const toast = useToast();
   const router = useRouter();
+
+  const getFormattedDateForInput = (date: Date) => {
+    const asString = date.toString();
+    console.log(`Date as a string: `, date);
+
+    const formatted = asString.substring(0, asString.indexOf("T"));
+
+    console.log(`Formatted Value `, formatted);
+
+    return formatted;
+  };
+
+  useEffect(() => {
+    !loading &&
+      data &&
+      setLineItem({
+        ...data.lineItem,
+        date: getFormattedDateForInput(data.lineItem.date),
+        // categor: data.lineItem.category?._id
+      });
+  }, [loading]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsSubmitting(true);
 
     try {
+      console.log(`Submitting line item: `, lineItem);
+
       await upsertLineItem({
         variables: {
           lineItem,
@@ -68,7 +104,7 @@ const UpsertLineItemForm: FC = () => {
       ? (newVal = value == "true")
       : (newVal = value);
 
-    console.log(newVal);
+    console.log(`New Value: `, newVal);
 
     setLineItem((prevLineItem: LineItem) => ({
       ...prevLineItem,
@@ -78,12 +114,20 @@ const UpsertLineItemForm: FC = () => {
 
   return (
     <form onSubmit={(e) => handleSubmit(e)}>
-      <LineItemInput
-        inputId="title"
-        inputType="title"
-        labelText="Title"
-        onChange={(e) => handleInputChange(e)}
-      />
+      <FormLabel htmlFor="title">Title</FormLabel>
+      <InputGroup>
+        <InputLeftElement
+          pointerEvents="none"
+          children={<Icon as={FiType} color="gray.300" />}
+        />
+        <Input
+          name="title"
+          type="text"
+          placeholder="Enter a title"
+          value={lineItem.title}
+          onChange={(e) => handleInputChange(e)}
+        />
+      </InputGroup>
 
       <FormLabel htmlFor="date">Date</FormLabel>
       <InputGroup>
@@ -94,6 +138,8 @@ const UpsertLineItemForm: FC = () => {
         <Input
           name="date"
           type="date"
+          // value={getFormattedDateForInput()}
+          value={`${lineItem.date}`}
           onChange={(e) => handleInputChange(e)}
           pattern="\d{4}-\d{2}-\d{2}"
         />
@@ -109,6 +155,7 @@ const UpsertLineItemForm: FC = () => {
           name="amount"
           type="number"
           placeholder="Enter amount"
+          value={lineItem.amount}
           onChange={(e) => handleInputChange(e)}
         />
       </InputGroup>
@@ -117,6 +164,7 @@ const UpsertLineItemForm: FC = () => {
       <Textarea
         name="notes"
         placeholder="Add any additional notes here"
+        value={lineItem.notes}
         onChange={(e) => handleInputChange(e)}
       />
 
