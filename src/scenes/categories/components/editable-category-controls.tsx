@@ -19,7 +19,7 @@ const EditableCategoryControls: FC<EditableCategoryControlsProps> = ({}) => {
   } = useEditableControls();
 
   return isEditing ? (
-    <ButtonGroup justifyContent="center" size="sm">
+    <ButtonGroup>
       <IconButton
         aria-label="Submit"
         icon={<FiCheck />}
@@ -32,14 +32,11 @@ const EditableCategoryControls: FC<EditableCategoryControlsProps> = ({}) => {
       />
     </ButtonGroup>
   ) : (
-    <Flex justifyContent="center">
-      <IconButton
-        aria-label="Edit"
-        size="sm"
-        icon={<EditIcon />}
-        {...getEditButtonProps()}
-      />
-    </Flex>
+    <IconButton
+      aria-label="Edit"
+      icon={<EditIcon />}
+      {...getEditButtonProps()}
+    />
   );
 };
 

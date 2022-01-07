@@ -4,7 +4,7 @@ import { useQuery } from "@apollo/client";
 import { GET_CATEGORIES } from "@shared/graphql/queries";
 import Error from "@shared/components/error";
 import Loading from "@shared/components/loading";
-import { Box, IconButton, SimpleGrid } from "@chakra-ui/react";
+import { HStack, IconButton, SimpleGrid } from "@chakra-ui/react";
 import { Category } from "@scenes/budget/types/Category";
 import EditableCategory from "./components/editable-category";
 import DynamicIcon from "@shared/components/dynamic-icon/dynamic-icon";
@@ -18,13 +18,13 @@ const Categories: FC = () => {
   return (
     <SimpleGrid columns={2} spacing={10}>
       {data.categories.map((cat: Category) => (
-        <Box key={cat._id} height="80px" bg="tomato">
+        <HStack key={cat._id} height="80px" bg="tomato" px="2">
           <IconButton
             aria-label="Icon"
-            icon={<DynamicIcon iconName={"FiDroplet"} />}
+            icon={<DynamicIcon iconName={cat.icon} />}
           />
           <EditableCategory category={cat} />
-        </Box>
+        </HStack>
       ))}
     </SimpleGrid>
   );

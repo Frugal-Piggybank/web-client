@@ -1,17 +1,16 @@
 import React, { FC, ReactElement } from "react";
 import * as FeatherIcons from "react-icons/fi";
 
-type FiIcons = keyof typeof FeatherIcons;
-
 interface DynamicIconProps {
-  iconName: keyof typeof FeatherIcons;
-  // iconName: string;
+  iconName: string;
 }
 
 const DynamicIcon: FC<DynamicIconProps> = ({ iconName }): ReactElement => {
-  // if (iconName typeof FiIcons)
+  const fiIconName = iconName as keyof typeof FeatherIcons;
 
-  const FiIcon = FeatherIcons[iconName];
+  const FiIcon = fiIconName
+    ? FeatherIcons[fiIconName]
+    : FeatherIcons["FiHelpCircle"];
 
   return <FiIcon />;
 };

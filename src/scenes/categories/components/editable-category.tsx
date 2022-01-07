@@ -1,6 +1,12 @@
 import React, { FC } from "react";
 import { Category } from "@scenes/budget/types/Category";
-import { Editable, EditableInput, EditablePreview } from "@chakra-ui/react";
+import {
+  Box,
+  Editable,
+  EditableInput,
+  EditablePreview,
+  Flex,
+} from "@chakra-ui/react";
 import EditableCategoryControls from "./editable-category-controls";
 
 interface EditableCategoryProps {
@@ -14,12 +20,14 @@ const EditableCategory: FC<EditableCategoryProps> = ({ category }) => {
         defaultValue={category.name}
         fontSize="2xl"
         isPreviewFocusable={false}
-        textAlign="center"
+        width="100%"
         // onEdit={() => handleEdit()}
       >
-        <EditablePreview />
-        <EditableInput />
-        <EditableCategoryControls />
+        <Flex justifyContent="space-between">
+          <EditablePreview />
+          <EditableInput paddingLeft="2" />
+          <EditableCategoryControls />
+        </Flex>
       </Editable>
     </>
   );
