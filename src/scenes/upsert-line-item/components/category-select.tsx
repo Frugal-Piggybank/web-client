@@ -1,9 +1,10 @@
 import React, { FC, useEffect, useState } from "react";
 import { useQuery } from "@apollo/client";
 import { Box, FormLabel, HStack, IconButton, Select } from "@chakra-ui/react";
-import { GET_CATEGORIES } from "../graphql/queries";
+import { GET_CATEGORIES } from "@shared/graphql/queries";
 import { Category } from "@scenes/budget/types/Category";
 import { FiPlus } from "react-icons/fi";
+import { useRouter } from "next/router";
 
 interface CategorySelectProps {
   currentCategory?: Category;
@@ -12,6 +13,7 @@ interface CategorySelectProps {
 const CategorySelect: FC<CategorySelectProps> = ({ currentCategory }) => {
   const [selectedCategory, setSelectedCategory] = useState<Category>();
   const { data, loading, error } = useQuery(GET_CATEGORIES);
+  const router = useRouter();
 
   useEffect(() => {
     if (!loading && currentCategory) {
@@ -42,6 +44,7 @@ const CategorySelect: FC<CategorySelectProps> = ({ currentCategory }) => {
           aria-label="Add Category"
           icon={<FiPlus />}
           colorScheme="teal"
+          onClick={() => router.push("/categories")}
         />
       </HStack>
     </Box>

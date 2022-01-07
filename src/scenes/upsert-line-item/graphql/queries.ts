@@ -14,12 +14,3 @@ export const GET_LINE_ITEM = gql`
     }
   }
 `;
-
-export const GET_CATEGORIES = gql`
-  ${BASE_CATEGORY}
-  query GetCategories {
-    categories {
-      ...BaseCategory
-    }
-  }
-`;
