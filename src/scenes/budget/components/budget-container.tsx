@@ -3,7 +3,7 @@ import { VStack, useDisclosure, useToast } from "@chakra-ui/react";
 import { ApolloQueryResult, useMutation } from "@apollo/client";
 
 import { LineItem } from "../types/LineItem";
-import DeleteAlertDialog from "@shared/components/alert-dialog/delete-alert-dialog";
+import DeleteAlertDialog from "@shared/components/delete-alert-dialog";
 import BudgetContainerItem from "./budget-container-item";
 import useSort from "@shared/hooks/use-sort";
 import { DELETE_LINE_ITEM } from "../graphql/mutations";

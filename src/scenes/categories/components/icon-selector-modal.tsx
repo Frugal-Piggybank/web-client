@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, MouseEventHandler } from "react";
 import {
   Button,
   Flex,
@@ -16,13 +16,19 @@ import {
 
 import * as FeatherIcons from "react-icons/fi";
 
-const CustomIcon: FC<{ iconKey: string }> = ({ iconKey }) => {
+interface CustomIconProps {
+  iconKey: string;
+  onClick: MouseEventHandler<HTMLButtonElement> | undefined;
+}
+
+const CustomIcon: FC<CustomIconProps> = ({ iconKey, onClick }) => {
   const keyAsIcon = iconKey as keyof typeof FeatherIcons;
 
   const FiIcon = FeatherIcons[keyAsIcon];
 
   return (
     <IconButton
+      onClick={onClick}
       m="1"
       variant="outline"
       colorScheme="teal"
@@ -32,13 +38,21 @@ const CustomIcon: FC<{ iconKey: string }> = ({ iconKey }) => {
   );
 };
 
-const IconSelectorModal: FC = () => {
-  const { isOpen, onOpen, onClose } = useDisclosure();
+interface IconSelectorModalProps {
+  onClose: () => void;
+  isOpen: boolean;
+  onIconSelection: (iconKey: string) => void;
+}
 
+const IconSelectorModal: FC<IconSelectorModalProps> = ({
+  onClose,
+  isOpen,
+  onIconSelection,
+}) => {
   const iconKeys = Object.keys(FeatherIcons);
 
   return (
-    <Modal onClose={onClose} isOpen={true}>
+    <Modal onClose={onClose} isOpen={isOpen}>
       <ModalOverlay />
       <ModalContent>
         <ModalHeader>
@@ -48,7 +62,11 @@ const IconSelectorModal: FC = () => {
         <ModalBody>
           <Flex wrap="wrap" justifyContent="space-between">
             {iconKeys.map((iconKey) => (
-              <CustomIcon key={iconKey} iconKey={iconKey} />
+              <CustomIcon
+                key={iconKey}
+                onClick={() => onIconSelection(iconKey)}
+                iconKey={iconKey}
+              />
             ))}
           </Flex>
         </ModalBody>

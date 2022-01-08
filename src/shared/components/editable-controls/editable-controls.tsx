@@ -8,9 +8,9 @@ import {
 import { FiCheck, FiX } from "react-icons/fi";
 import { EditIcon } from "@chakra-ui/icons";
 
-interface EditableCategoryControlsProps {}
+interface EditableControlsProps {}
 
-const EditableCategoryControls: FC<EditableCategoryControlsProps> = ({}) => {
+const EditableControls: FC<EditableControlsProps> = ({}) => {
   const {
     isEditing,
     getSubmitButtonProps,
@@ -40,4 +40,4 @@ const EditableCategoryControls: FC<EditableCategoryControlsProps> = ({}) => {
   );
 };
 
-export default EditableCategoryControls;
+export default EditableControls;

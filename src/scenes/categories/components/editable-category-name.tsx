@@ -1,36 +1,39 @@
 import React, { FC } from "react";
 import { Category } from "@scenes/budget/types/Category";
 import {
-  Box,
   Editable,
   EditableInput,
   EditablePreview,
   Flex,
 } from "@chakra-ui/react";
-import EditableCategoryControls from "./editable-category-controls";
+import EditableControls from "@shared/components/editable-controls";
 
-interface EditableCategoryProps {
-  category: Category;
+interface EditableCategoryNameProps {
+  categoryName: string;
+  onNameChange: ((nextValue: string) => void) | undefined;
 }
 
-const EditableCategory: FC<EditableCategoryProps> = ({ category }) => {
+const EditableCategoryName: FC<EditableCategoryNameProps> = ({
+  categoryName,
+  onNameChange,
+}) => {
   return (
     <>
       <Editable
-        defaultValue={category.name}
+        defaultValue={categoryName}
         fontSize="2xl"
         isPreviewFocusable={false}
         width="100%"
-        // onEdit={() => handleEdit()}
+        onSubmit={onNameChange}
       >
         <Flex justifyContent="space-between">
           <EditablePreview />
           <EditableInput paddingLeft="2" />
-          <EditableCategoryControls />
+          <EditableControls />
         </Flex>
       </Editable>
     </>
   );
 };
 
-export default EditableCategory;
+export default EditableCategoryName;

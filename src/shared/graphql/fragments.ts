@@ -15,6 +15,5 @@ export const BASE_CATEGORY = gql`
     _id
     name
     icon
-    isActive
   }
 `;
