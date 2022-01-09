@@ -1,11 +1,11 @@
 import React, { FC } from "react";
 import { Text } from "@chakra-ui/react";
 
+import Nav from "@shared/components/nav";
 import Container from "./components/container";
 import Footer from "./components/footer";
 import Hero from "./components/hero";
 import Main from "./components/main";
-import DarkModeSwitch from "./components/dark-mode-switch";
 
 interface LayoutProps {
   pageTitle?: string;
@@ -17,10 +17,9 @@ const Layout: FC<LayoutProps> = ({
 }) => {
   return (
     <Container height="100vh">
+      <Nav />
       <Hero title={`${pageTitle}`} />
       <Main>{children}</Main>
-
-      <DarkModeSwitch />
       <Footer>
         <Text bgClip="text" bgGradient="linear(to-l, #7928CA, #FF0080)">
           @thefrugaldev
