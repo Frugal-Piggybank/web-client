@@ -1,15 +1,22 @@
-import { GetServerSideProps } from "next";
 import React, { ReactElement } from "react";
+import { GetServerSideProps } from "next";
+import { withPageAuthRequired, UserProfile } from "@auth0/nextjs-auth0";
+
 import EditBudgetPage from ".";
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  return {
-    props: { id: context.params?.id },
-  };
-};
+export const getServerSideProps: GetServerSideProps = withPageAuthRequired({
+  async getServerSideProps(context) {
+    return {
+      props: { id: context.params?.id },
+    };
+  },
+});
 
 const EditBudgetPageWrapper = (props: {
   id: string;
-}): ReactElement<any, any> => <EditBudgetPage {...props} />;
+  user: UserProfile;
+}): ReactElement<any, any> => {
+  return <EditBudgetPage {...props} />;
+};
 
 export default EditBudgetPageWrapper;

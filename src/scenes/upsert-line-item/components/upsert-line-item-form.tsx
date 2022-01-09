@@ -19,7 +19,7 @@ import { GET_LINE_ITEM } from "../graphql/queries";
 import CategorySelect from "./category-select";
 
 interface UpsertLineItemFormProps {
-  id: string;
+  id?: string;
 }
 
 const UpsertLineItemForm: FC<UpsertLineItemFormProps> = ({ id }) => {

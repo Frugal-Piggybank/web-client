@@ -3,7 +3,7 @@ import { useUser } from "@auth0/nextjs-auth0";
 import NavLink from "./nav-link";
 
 const AuthLink: FC = () => {
-  const { user, error, isLoading } = useUser();
+  const { user, isLoading } = useUser();
 
   return isLoading ? (
     <></>
