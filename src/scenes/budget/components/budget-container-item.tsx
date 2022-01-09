@@ -14,6 +14,7 @@ import { FiCreditCard, FiInfo, FiTrash2 } from "react-icons/fi";
 import { formatDateTime } from "@shared/lib/datetime-helpers";
 import { LineItem } from "../types/LineItem";
 import LineItemNotesPopover from "./line-item-notes-popover";
+import DynamicIcon from "@shared/components/dynamic-icon";
 
 interface BudgetContainerItemProps {
   lineItem: LineItem;
@@ -38,7 +39,12 @@ const BudgetContainerItem: FC<BudgetContainerItemProps> = ({
     >
       <Flex justifyContent="space-between">
         <HStack spacing="10">
-          <Icon as={FiCreditCard} />
+          {lineItem.category?.icon ? (
+            <DynamicIcon iconName={lineItem.category.icon} />
+          ) : (
+            <Icon as={FiCreditCard} />
+          )}
+
           <Box>
             <Heading fontSize="xl">{lineItem.title}</Heading>
             <Text fontSize="sm">{formatDateTime(lineItem.date)}</Text>
