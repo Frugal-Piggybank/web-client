@@ -11,39 +11,27 @@ import { UPSERT_CATEGORY } from "./graphql/mutations";
 import { GET_CATEGORIES } from "@shared/graphql/queries";
 
 const Categories: FC = () => {
-  const { data, loading, error } = useQuery(GET_CATEGORIES);
+  const { data, loading, error, refetch } = useQuery(GET_CATEGORIES);
   const [upsertCategory] = useMutation(UPSERT_CATEGORY);
-  const [categoryToUpdate, setCategoryToUpdate] = useState<any>();
+  const [categoryToUpdate, setCategoryToUpdate] = useState<Category>();
+  const [selectedId, setSelectedId] = useState<string>();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const toast = useToast();
 
   useEffect(() => {
-    console.log(`Category to update changed`, categoryToUpdate);
-
-    if (categoryToUpdate) saveCategoryUpdate();
+    if (categoryToUpdate?._id) saveCategoryUpdate();
   }, [categoryToUpdate]);
 
   if (error) return <Error error={error} />;
   if (loading) return <Loading />;
 
-  const handleModalIconSelection = (iconKey: string) => {
-    setCategoryToUpdate((prevCategory: Category) => ({
-      ...prevCategory,
-      icon: iconKey,
-    }));
-
-    onClose();
-  };
-
   const saveCategoryUpdate = async () => {
-    if (!categoryToUpdate?._id) {
-      console.log(`No category to update`, categoryToUpdate);
-      return;
-    }
+    onClose();
 
     try {
       await upsertCategory({ variables: { category: categoryToUpdate } });
 
+      refetch();
       toast({
         title: "Category updated successfully",
         status: "success",
@@ -58,8 +46,6 @@ const Categories: FC = () => {
         isClosable: true,
       });
     }
-
-    // setCategoryToUpdate(undefined);
   };
 
   return (
@@ -70,19 +56,28 @@ const Categories: FC = () => {
             key={cat._id}
             category={cat}
             onIconClick={() => {
-              setCategoryToUpdate(cat);
+              setSelectedId(cat._id);
               onOpen();
             }}
-            onNameChange={(name: string) => {
-              setCategoryToUpdate({ ...cat, name });
-            }}
+            onNameEdit={() => setSelectedId(cat._id)}
+            onNameChange={(name) =>
+              setCategoryToUpdate({
+                _id: selectedId,
+                name,
+              })
+            }
           />
         ))}
       </SimpleGrid>
       <IconSelectorModal
         isOpen={isOpen}
         onClose={onClose}
-        onIconSelection={handleModalIconSelection}
+        onIconSelection={(iconKey) =>
+          setCategoryToUpdate({
+            _id: selectedId,
+            icon: iconKey,
+          })
+        }
       />
     </>
   );

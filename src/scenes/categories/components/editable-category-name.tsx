@@ -9,13 +9,15 @@ import {
 import EditableControls from "@shared/components/editable-controls";
 
 interface EditableCategoryNameProps {
-  categoryName: string;
+  categoryName: string | undefined;
   onNameChange: ((nextValue: string) => void) | undefined;
+  onEdit: () => void;
 }
 
 const EditableCategoryName: FC<EditableCategoryNameProps> = ({
   categoryName,
   onNameChange,
+  onEdit,
 }) => {
   return (
     <>
@@ -24,6 +26,7 @@ const EditableCategoryName: FC<EditableCategoryNameProps> = ({
         fontSize="2xl"
         isPreviewFocusable={false}
         width="100%"
+        onChange={onEdit}
         onSubmit={onNameChange}
       >
         <Flex justifyContent="space-between">

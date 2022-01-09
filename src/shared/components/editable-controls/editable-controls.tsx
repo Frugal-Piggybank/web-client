@@ -1,16 +1,9 @@
-import React, { FC } from "react";
-import {
-  ButtonGroup,
-  Flex,
-  IconButton,
-  useEditableControls,
-} from "@chakra-ui/react";
+import React, { FC, useEffect } from "react";
+import { ButtonGroup, IconButton, useEditableControls } from "@chakra-ui/react";
 import { FiCheck, FiX } from "react-icons/fi";
 import { EditIcon } from "@chakra-ui/icons";
 
-interface EditableControlsProps {}
-
-const EditableControls: FC<EditableControlsProps> = ({}) => {
+const EditableControls: FC = () => {
   const {
     isEditing,
     getSubmitButtonProps,

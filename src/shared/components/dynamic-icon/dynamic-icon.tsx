@@ -2,7 +2,7 @@ import React, { FC, ReactElement } from "react";
 import * as FeatherIcons from "react-icons/fi";
 
 interface DynamicIconProps {
-  iconName: string;
+  iconName: string | undefined;
 }
 
 const DynamicIcon: FC<DynamicIconProps> = ({ iconName }): ReactElement => {
