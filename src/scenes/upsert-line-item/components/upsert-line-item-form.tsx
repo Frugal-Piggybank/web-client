@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from "react";
+import React, { ChangeEvent, FC, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { useMutation, useQuery } from "@apollo/client";
 import {
@@ -16,7 +16,6 @@ import { FiCalendar, FiDollarSign, FiType } from "react-icons/fi";
 import { LineItem, NewLineItem } from "@scenes/budget/types/LineItem";
 import { UPSERT_LINE_ITEM } from "../graphql/mutations";
 import { GET_LINE_ITEM } from "../graphql/queries";
-import { formatDateTime } from "@shared/lib/datetime-helpers";
 import CategorySelect from "./category-select";
 
 interface UpsertLineItemFormProps {
@@ -25,7 +24,7 @@ interface UpsertLineItemFormProps {
 
 const UpsertLineItemForm: FC<UpsertLineItemFormProps> = ({ id }) => {
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
-  const [lineItem, setLineItem] = useState<LineItem>(NewLineItem);
+  const [lineItem, setLineItem] = useState<any>(NewLineItem);
 
   const { loading, data } = useQuery(GET_LINE_ITEM, {
     variables: {
@@ -52,7 +51,7 @@ const UpsertLineItemForm: FC<UpsertLineItemFormProps> = ({ id }) => {
       setLineItem({
         ...data.lineItem,
         date: getFormattedDateForInput(data.lineItem.date),
-        // category: data.lineItem.category?._id,
+        category: data.lineItem.category?._id,
       });
   }, [loading]);
 
@@ -88,7 +87,7 @@ const UpsertLineItemForm: FC<UpsertLineItemFormProps> = ({ id }) => {
   };
 
   const handleInputChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
   ) => {
     let newVal: string | number | boolean;
     const { name, type, value } = e.currentTarget;
@@ -131,14 +130,16 @@ const UpsertLineItemForm: FC<UpsertLineItemFormProps> = ({ id }) => {
         <Input
           name="date"
           type="date"
-          // value={getFormattedDateForInput()}
           value={`${lineItem.date}`}
           onChange={(e) => handleInputChange(e)}
           pattern="\d{4}-\d{2}-\d{2}"
         />
       </InputGroup>
 
-      <CategorySelect currentCategory={lineItem.category} />
+      <CategorySelect
+        currentCategoryId={lineItem.category ?? ""}
+        onSelect={handleInputChange}
+      />
 
       <FormLabel>Amount</FormLabel>
       <InputGroup>
