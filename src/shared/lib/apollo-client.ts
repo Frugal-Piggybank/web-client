@@ -14,7 +14,7 @@ export const APOLLO_STATE_PROP_NAME = "__APOLLO_STATE__";
 
 let apolloClient: ApolloClient<NormalizedCacheObject>;
 
-const cleanTypeName = new ApolloLink((operation, forward) => {
+const cleanTypeNameLink = new ApolloLink((operation, forward) => {
   // strips the __typename field for any outbound mutations
   // to the graphQL server
   if (operation.variables) {
@@ -30,16 +30,14 @@ const cleanTypeName = new ApolloLink((operation, forward) => {
 });
 
 const createApolloClient = () => {
-  const uri = `${process.env.NEXT_PUBLIC_GRAPHQL_URI}`;
-
   const httpLink = new HttpLink({
-    uri: uri,
+    uri: "/api/graphql", // sends to proxy api to include access token
     credentials: "same-origin",
   });
 
   return new ApolloClient({
     ssrMode: typeof window === "undefined",
-    link: from([cleanTypeName, httpLink]), //http link must be last because its a terminating link
+    link: from([cleanTypeNameLink, httpLink]), //http link must be last because its a terminating link
     cache: new InMemoryCache(),
   });
 };
