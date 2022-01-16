@@ -3,7 +3,10 @@ import httpProxyMiddleware from "next-http-proxy-middleware";
 
 export default withApiAuthRequired(async function graphql(req, res) {
   try {
-    const { accessToken } = await getAccessToken(req, res);
+    const { accessToken } = await getAccessToken(req, res, {
+      refresh: true,
+    });
+
     const uri = `${process.env.GRAPHQL_BASE_URL}`;
 
     return httpProxyMiddleware(req, res, {
