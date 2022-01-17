@@ -15,8 +15,9 @@ import { FiCalendar, FiDollarSign, FiType } from "react-icons/fi";
 
 import { LineItem, NewLineItem } from "@scenes/budget/types/LineItem";
 import { UPSERT_LINE_ITEM } from "../graphql/mutations";
-import { GET_LINE_ITEM } from "../graphql/queries";
+import { GET_EDIT_LINE_ITEM } from "../graphql/queries";
 import CategorySelect from "./category-select";
+import Loading from "@shared/components/loading";
 
 interface UpsertLineItemFormProps {
   id?: string;
@@ -26,7 +27,7 @@ const UpsertLineItemForm: FC<UpsertLineItemFormProps> = ({ id }) => {
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [lineItem, setLineItem] = useState<any>(NewLineItem);
 
-  const { loading, data } = useQuery(GET_LINE_ITEM, {
+  const { loading, data } = useQuery(GET_EDIT_LINE_ITEM, {
     variables: {
       id,
     },
@@ -104,6 +105,8 @@ const UpsertLineItemForm: FC<UpsertLineItemFormProps> = ({ id }) => {
     }));
   };
 
+  if (loading) return <Loading />;
+
   return (
     <form onSubmit={(e) => handleSubmit(e)}>
       <FormLabel htmlFor="title">Title</FormLabel>
@@ -137,6 +140,7 @@ const UpsertLineItemForm: FC<UpsertLineItemFormProps> = ({ id }) => {
       </InputGroup>
 
       <CategorySelect
+        categories={data.categories}
         currentCategoryId={lineItem.category ?? ""}
         onSelect={handleInputChange}
       />

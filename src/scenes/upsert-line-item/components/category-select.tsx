@@ -1,34 +1,32 @@
 import React, { ChangeEvent, FC, useEffect, useState } from "react";
-import { useQuery } from "@apollo/client";
 import { Box, FormLabel, HStack, IconButton, Select } from "@chakra-ui/react";
-import { GET_CATEGORIES } from "@shared/graphql/queries";
 import { Category } from "@scenes/budget/types/Category";
 import { FiPlus } from "react-icons/fi";
 import { useRouter } from "next/router";
 
 interface CategorySelectProps {
+  categories: Category[];
   currentCategoryId?: string;
   onSelect: (e: ChangeEvent<HTMLSelectElement>) => void;
 }
 
 const CategorySelect: FC<CategorySelectProps> = ({
+  categories,
   currentCategoryId,
   onSelect,
 }) => {
   const [selectedCategoryId, setSelectedCategoryId] = useState<string>();
-  const { data, loading } = useQuery(GET_CATEGORIES);
   const router = useRouter();
 
   useEffect(() => {
-    if (!loading && currentCategoryId) {
+    if (currentCategoryId) {
       setSelectedCategoryId(
-        data.categories.find((cat: Category) => cat._id === currentCategoryId)
-          ?._id
+        categories.find((cat: Category) => cat._id === currentCategoryId)?._id
       );
     }
-  }, [loading, currentCategoryId]);
+  }, [currentCategoryId]);
 
-  return !loading ? (
+  return (
     <Box>
       <FormLabel htmlFor="category">Category</FormLabel>
       <HStack>
@@ -41,7 +39,7 @@ const CategorySelect: FC<CategorySelectProps> = ({
             onSelect(e);
           }}
         >
-          {data.categories.map((cat: Category) => (
+          {categories.map((cat: Category) => (
             <option key={cat._id} value={cat._id}>
               {cat.name}
             </option>
@@ -55,8 +53,6 @@ const CategorySelect: FC<CategorySelectProps> = ({
         />
       </HStack>
     </Box>
-  ) : (
-    <></>
   );
 };
 
