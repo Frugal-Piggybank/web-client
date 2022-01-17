@@ -39,7 +39,7 @@ const CategorySelect: FC<CategorySelectProps> = ({
             onSelect(e);
           }}
         >
-          {categories.map((cat: Category) => (
+          {categories?.map((cat: Category) => (
             <option key={cat._id} value={cat._id}>
               {cat.name}
             </option>

@@ -16,6 +16,7 @@ import { FiCalendar, FiDollarSign, FiType } from "react-icons/fi";
 import { LineItem, NewLineItem } from "@scenes/budget/types/LineItem";
 import { UPSERT_LINE_ITEM } from "../graphql/mutations";
 import { GET_EDIT_LINE_ITEM } from "../graphql/queries";
+import { GET_CATEGORIES } from "@shared/graphql/queries";
 import CategorySelect from "./category-select";
 import Loading from "@shared/components/loading";
 
@@ -31,7 +32,7 @@ const UpsertLineItemForm: FC<UpsertLineItemFormProps> = ({ id }) => {
     variables: {
       id,
     },
-    skip: !id,
+    query: id ? GET_EDIT_LINE_ITEM : GET_CATEGORIES,
     fetchPolicy: "network-only",
   });
   const [upsertLineItem] = useMutation(UPSERT_LINE_ITEM);
@@ -48,7 +49,7 @@ const UpsertLineItemForm: FC<UpsertLineItemFormProps> = ({ id }) => {
 
   useEffect(() => {
     !loading &&
-      data &&
+      data.lineItem &&
       setLineItem({
         ...data.lineItem,
         date: getFormattedDateForInput(data.lineItem.date),
@@ -140,7 +141,7 @@ const UpsertLineItemForm: FC<UpsertLineItemFormProps> = ({ id }) => {
       </InputGroup>
 
       <CategorySelect
-        categories={data.categories}
+        categories={data?.categories}
         currentCategoryId={lineItem.category ?? ""}
         onSelect={handleInputChange}
       />
