@@ -9,7 +9,7 @@ export default withApiAuthRequired(async function graphql(req, res) {
 
     const uri = `${process.env.GRAPHQL_BASE_URL}`;
 
-    return httpProxyMiddleware(req, res, {
+    return await httpProxyMiddleware(req, res, {
       target: `${uri}`,
       pathRewrite: [
         {
