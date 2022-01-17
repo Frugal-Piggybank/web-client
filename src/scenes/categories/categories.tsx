@@ -9,6 +9,7 @@ import IconSelectorModal from "./components/icon-selector-modal";
 import UpdateCategoryContainer from "./components/update-category-container";
 import { UPSERT_CATEGORY } from "./graphql/mutations";
 import { GET_CATEGORIES } from "@shared/graphql/queries";
+import AddCategoryModal from "./components/add-category-modal";
 
 const Categories: FC = () => {
   const { data, loading, error, refetch } = useQuery(GET_CATEGORIES);
@@ -29,7 +30,10 @@ const Categories: FC = () => {
     onClose();
 
     try {
-      await upsertCategory({ variables: { category: categoryToUpdate } });
+      //TODO: use category returned from mutation instead of refetching
+      const { data } = await upsertCategory({
+        variables: { category: categoryToUpdate },
+      });
 
       refetch();
       toast({
@@ -69,6 +73,7 @@ const Categories: FC = () => {
           />
         ))}
       </SimpleGrid>
+      <AddCategoryModal onNewCategory={() => refetch()} />
       <IconSelectorModal
         isOpen={isOpen}
         onClose={onClose}
