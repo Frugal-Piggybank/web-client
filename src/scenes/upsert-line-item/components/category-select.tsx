@@ -23,7 +23,7 @@ const CategorySelect: FC<CategorySelectProps> = ({
     if (!loading && currentCategoryId) {
       setSelectedCategoryId(
         data.categories.find((cat: Category) => cat._id === currentCategoryId)
-          ._id
+          ?._id
       );
     }
   }, [loading, currentCategoryId]);
